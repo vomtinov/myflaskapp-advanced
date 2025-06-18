@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🛍️ Manish's Fashion Store</title>
+</head>
+<body>
+    <h1>🛒 Welcome to Manish's Fashion Store</h1>
+
+    {% for product in products %}
+        <div style="border:1px solid #ccc; padding:10px; margin:10px; width:320px; display:inline-block; vertical-align:top;">
+            <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.name }}" width="300"><br>
+            <h3>{{ product.name }}</h3>
+            <p><strong>Category:</strong> {{ product.category }}</p>
+            <p><strong>Price:</strong> {{ product.price }}</p>
+            <a href="{{ url_for('buy', product_id=product.id) }}">
+                <button style="padding: 8px 15px; font-weight: bold;">Buy Now</button>
+            </a>
+        </div>
+    {% endfor %}
+</body>
+</html>

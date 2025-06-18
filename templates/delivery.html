@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Confirmation</title>
+</head>
+<body>
+    <h1>🎉 Order Confirmed!</h1>
+
+    <h2>You bought: {{ product.name }}</h2>
+    <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="{{ product.name }}" width="250"><br>
+    <p><strong>Category:</strong> {{ product.category }}</p>
+    <p><strong>Price:</strong> {{ product.price }}</p>
+    <p>🚚 Your product will be delivered next month.</p>
+
+    <a href="{{ url_for('home') }}">← Back to Home</a>
+</body>
+</html>
