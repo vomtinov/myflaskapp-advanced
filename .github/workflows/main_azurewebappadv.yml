@@ -26,7 +26,7 @@ jobs:
           sudo apt-get update
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y unixodbc-dev
 
-      - name: Create and activate virtual environment & install requirements
+      - name: Create & activate venv, install requirements
         run: |
           python -m venv venv
           source venv/bin/activate
@@ -36,7 +36,7 @@ jobs:
       - name: Zip artifact for deployment
         run: zip -r release.zip . -x "venv/*"
 
-      - name: Upload artifact for deployment job
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: python-app
@@ -49,7 +49,7 @@ jobs:
       contents: read
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: python-app
@@ -57,14 +57,10 @@ jobs:
       - name: Unzip artifact
         run: unzip release.zip
 
-      - name: Azure Login via Publish Profile
-        uses: azure/login@v2
-        with:
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'Azurewebappadv'
           slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
